@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:interview_preparation/core/helper_functions/on_generate_route.dart';
+import 'package:interview_preparation/core/utils/app_colors.dart';
 import 'package:interview_preparation/features/auth/presentation/manager/providers/auth_provider.dart';
 import 'package:interview_preparation/features/auth/presentation/views/login_view.dart';
 import 'package:interview_preparation/features/home/presentation/manager/question_provider.dart';
@@ -46,8 +47,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData.light(),
+      theme: ThemeData(
+            primaryColor: AppColors.lightPrimaryColor
+      ),
       darkTheme: ThemeData.dark(),
+      
       themeMode: Provider.of<ThemeProvider>(context).themeMode,
       debugShowCheckedModeBanner: false,
       onGenerateRoute: onGenerateRoute,

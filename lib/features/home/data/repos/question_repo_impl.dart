@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-
+import 'package:flutter/foundation.dart';
 import 'package:interview_preparation/features/home/data/data_sources/home_local_data_source.dart';
 import 'package:interview_preparation/features/home/data/data_sources/home_remote_data_source.dart';
 import 'package:interview_preparation/features/home/data/repos/question_repo.dart';
@@ -52,5 +51,21 @@ class QuestionRepoImpl implements QuestionRepo {
     // Clear questions locally (from SQLite)
     await _localDataSource.clearQuestions();
     debugPrint('Questions cleared from local SQLite');
+  }
+
+    // New method to search questions using isolates
+  Future<List<Map<String, dynamic>>> searchQuestions(String query) async {
+    final List<Map<String, dynamic>> allQuestions = await getQuestions();
+    return compute(_searchInQuestions, {'questions': allQuestions, 'query': query});
+  }
+
+  static List<Map<String, dynamic>> _searchInQuestions(Map<String, dynamic> data) {
+    List<Map<String, dynamic>> questions = data['questions'];
+    String query = data['query'].toLowerCase();
+
+    return questions.where((question) {
+      String questionText = question['question'] ?? '';
+      return questionText.toLowerCase().contains(query);
+    }).toList();
   }
 }

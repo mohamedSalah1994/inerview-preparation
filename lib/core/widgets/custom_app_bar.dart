@@ -32,18 +32,6 @@ AppBar buildAppBar(BuildContext context, {required String title}) {
       textAlign: TextAlign.center,
       style: TextStyles.bold19.copyWith(color: titleColor), // Set title color based on theme
     ),
-    actions: [
-      Consumer<ThemeProvider>(
-        builder: (context, themeProvider, child) {
-          return Switch(
-            activeColor: AppColors.primaryColor,
-            value: themeProvider.themeMode == ThemeMode.dark,
-            onChanged: (bool value) {
-              themeProvider.toggleTheme(value);
-            },
-          );
-        },
-      ),
-    ],
+
   );
 }

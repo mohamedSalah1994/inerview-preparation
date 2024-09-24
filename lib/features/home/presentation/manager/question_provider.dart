@@ -27,8 +27,18 @@ class QuestionProvider with ChangeNotifier {
       'question': question,
       'answer': answer,
     });
+  }
 
-
-    
+    Future<void> searchQuestions(String query) async {
+    try {
+      if (query.isEmpty) {
+        await fetchQuestions();
+      } else {
+        _questions = await _questionRepoImpl.searchQuestions(query);
+      }
+      notifyListeners();
+    } catch (e) {
+      debugPrint('Error searching questions: $e');
+    }
   }
 }
